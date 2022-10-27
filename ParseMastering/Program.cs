@@ -1,21 +1,54 @@
-﻿using ParseMastering.Parsers;
+﻿using org.mariuszgromada.math.mxparser;
+using ParseMastering.Parsers;
+using System.Windows.Shapes;
 
-while (true)
+internal class Program
 {
-    Console.Write("Enter equation: ");
-    string line = Console.ReadLine();
-    string parsed = "";
+    [STAThread]
+    private static void Main(string[] args)
+    {
+        mXparser.setDegreesMode();
+        while (true)
+        {
+            Console.Write("Enter expression: ");
+            string line = Console.ReadLine();
+            string? parsed = null;
 
-    parsed = ParseEquation(line);
+            Expression e = new(line);
+            double val = e.calculate();
 
-    Console.WriteLine(parsed);
-}
+            if (double.IsNaN(val))
+            {
+                parsed = ParseEquation(line);
+
+                if (parsed == null)
+                {
+                    Console.WriteLine("Failed to parse.");
+                }
+                else
+                {
+                    Console.WriteLine(parsed);
+                    e = new(parsed);
+                    val = e.calculate();
+                    Console.WriteLine(val);
+                    Clipboard.SetText(val.ToString());
+                }
+            }
+            else
+            {
+                Console.WriteLine("Standard expression detected.");
+                Console.WriteLine(val);
+                Clipboard.SetText(val.ToString());
+            }
+        }
 
 
-string ParseEquation(string line)
-{
-    Operation op = ExpressionParser.Parse(line);
-    if (op == null) return "Failed to parse";
+        string? ParseEquation(string line)
+        {
+            Operation op = ExpressionParser.Parse(line);
+            if (op == null) return null;
 
-    return op.ToString();
+            return op.ToString();
+        }
+    }
 }
