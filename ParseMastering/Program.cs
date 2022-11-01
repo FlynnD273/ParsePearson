@@ -31,14 +31,14 @@ internal class Program
                     e = new(parsed);
                     val = e.calculate();
                     Console.WriteLine(val);
-                    Clipboard.SetText(val.ToString());
+                    Clipboard.SetText(val.ToString().Replace("E", "*10^"));
                 }
             }
             else
             {
                 Console.WriteLine("Standard expression detected.");
                 Console.WriteLine(val);
-                Clipboard.SetText(val.ToString());
+                Clipboard.SetText(val.ToString().Replace("E", "*10^"));
             }
         }
 
