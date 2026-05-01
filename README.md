@@ -1,3 +1,5 @@
+# ⚠️ This repository has migrated to [Codeberg](https://codeberg.org/FlynnD273/parse-pearson)
+
 # ParseMastering
 
 Parses the math notation used by Pearson and converts it into syntax that DuckDuckGo and other equation parsers recognizes.
